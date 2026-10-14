@@ -1,10 +1,29 @@
+import csv
+
+FILE_NAME = "expenses.csv"
 def show_menu():
+
     print("1. Add expense")
     print("2. View expenses")
     print("3. See total")
     print("4. Quit")
+def load_expenses():
+    expenses = []
+    try:
+        with open(FILE_NAME, newline="") as file:
+            for row in csv.reader(file):
+                expenses.append((row[0], float(row[1])))
+    except FileNotFoundError:
+        pass
+    return expenses
 
-expenses=[]
+
+def save_expenses(expenses):
+    with open(FILE_NAME, "w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerows(expenses)
+
+expenses=load_expenses()
 
 while True:
     show_menu()
@@ -18,6 +37,7 @@ while True:
             print("That's not a valid number. Try again.")
             continue
         expenses.append((description, amount))
+        save_expenses(expenses)
         print("Added!")    
     elif choice == "2":
         if len(expenses) == 0:
