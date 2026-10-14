@@ -12,7 +12,11 @@ while True:
 
     if choice == "1":
         description = input("What was it for? ")
-        amount = float(input("How much? "))
+        try:
+            amount = float(input("How much? "))
+        except ValueError:
+            print("That's not a valid number. Try again.")
+            continue
         expenses.append((description, amount))
         print("Added!")    
     elif choice == "2":
@@ -23,8 +27,6 @@ while True:
     elif choice == "3":
         total = sum(amount for description, amount in expenses)
         print(f"Total: £{total:.2f}")
-    elif choice == "3":
-        print("You chose: See total")
     elif choice == "4":
         print("Goodbye!")
         break
